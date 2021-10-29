@@ -2,7 +2,7 @@ import fs from 'fs';
 import path from 'path';
 import { toReadFile } from './file.js';
 
-export const toReadDirectory = (pathFromCli) => {
+export const toReadDirectory = (pathFromCli, validateOrStats) => {
   let filesMD = []
   fs.readdir(pathFromCli, function callback(err, list) {
     if (err) return console.error(err)
@@ -15,15 +15,16 @@ export const toReadDirectory = (pathFromCli) => {
 //ingnora otras extenciones 
            if (path.extname(file).length == 0) {//se realiza este if para que se asegure que es carpeta ya que si se coloca un else podrian caes los archivos con otra extencion
               let carpeta = (pathFromCli + '\\' + file);
-              toReadDirectory(carpeta);
+              toReadDirectory(carpeta,validateOrStats);
       }
     })
     //   console.log(filesMD)//objeto
 
     //   llamar funcion para leer cada file
+    
     filesMD.forEach(url => {
       //   console.log(url)
-      toReadFile(url)
+      toReadFile(url, validateOrStats)
     })
   })
 }

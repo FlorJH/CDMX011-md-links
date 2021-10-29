@@ -4,9 +4,9 @@ import {htttpRequest} from './HtmlRequest.js';
 // import { mdLink } from './mdLinks.js';
 // import { mdLink } from "../index.js";
 import {validateFalse, validateTrue, statusOption, statusAndValidate} from './metricas.js';
-import {validateOrStats} from '../index.js';
+// import {validateOrStats} from '../index.js';
 
-export const toReadFile = (pathFromCli) => {
+export const toReadFile = (pathFromCli, validateOrStats) => {
     const pathExt = path.extname(pathFromCli);
     //lee archivo con ext .md
 
@@ -14,7 +14,7 @@ export const toReadFile = (pathFromCli) => {
 
         const content = fs.readFileSync(pathFromCli, 'utf8')
         // console.log(pathFromCli)
-        findUrl(pathFromCli, content);
+        findUrl(pathFromCli, content, validateOrStats);
         //  return console.log(fs.readFileSync(pathFromCli, 'utf8'))
 
     } else {
@@ -25,7 +25,7 @@ export const toReadFile = (pathFromCli) => {
 
 
 
-const findUrl = (pathFromCli, content) => {
+const findUrl = (pathFromCli, content, validateOrStats) => {
     let urlToAnalise = [];
     let marckdownUlr = /\[(.*)\]\((https?)\:\/\/([\w_-]+(?:(?:\.[\w_-]+)+))([\w.,@?^=%&:/~+#-]*[\w@?^=%&/~+#-])?\)/gi;
     let urlTittle = /\[(.*)\]/gi;//obtener title 
@@ -46,10 +46,12 @@ const findUrl = (pathFromCli, content) => {
         })
 
         // return console.log(urlToAnalise)
-        // console.log(htttpRequest(urlToAnalise))
+        //console.log(htttpRequest(urlToAnalise))
           htttpRequest(urlToAnalise)
         .then((data)=>{
             //  mdLink(pathFromCli,data)
+            console.log(validateOrStats)
+        // console.log(htttpRequest(urlToAnalise))
              switch(validateOrStats){ 
                  
                 case '--validate:true':

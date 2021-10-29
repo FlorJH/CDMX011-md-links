@@ -8,9 +8,9 @@ import { toReadDirectory } from './libs/directory.js';
 import {validateFalse, validateTrue, statusOption, statusAndValidate} from './libs/metricas.js';
 
 const pathCli = absolutePath(process.argv[2]);
-export const validateOrStats= process.argv[3];
+ const validateOrStats= process.argv[3];
 // export const validateAndStats= process.argv[4];
-// console.log(validateOrStats);
+
 console.log(chalk.blue(figlet . textSync ( 'Md-Links' ,  { 
   font: 'Ghost',
   horizontalLayout: 'default',
@@ -19,17 +19,17 @@ console.log(chalk.blue(figlet . textSync ( 'Md-Links' ,  {
   whitespaceBreak : true 
 } ) ));
 
-fs.stat(pathCli, (err, stats) => {
+fs.stat(pathCli, (err, stats)=> {
   if (err) {
     return console.log(err.message);
   }
-
+  console.log(validateOrStats);
   if (stats.isFile()) {
     // console.log('file')
-    toReadFile(pathCli)
+    toReadFile(pathCli,validateOrStats )
   } else if (stats.isDirectory()) {
     // console.log(path.basename(pathCli))
-    toReadDirectory(pathCli);
+    toReadDirectory(pathCli, validateOrStats);
   }
 });
 
